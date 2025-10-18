@@ -19,8 +19,17 @@ django :
 js : 
 college exam results cehcking  and synllus copy downloads 
 youtube content generation from video link 
+my portfolio
 
 --------------------------------------------------------->
 reactjs : 
 1) mobile applications showing 
 2) horticulture for front end
+
+
+
+==> vivek github portfolio : 
+https://vivek-thumu-portfolio-showcase.vercel.app/
+
+==> bible app : 
+https://bible-react-chi.vercel.app/
