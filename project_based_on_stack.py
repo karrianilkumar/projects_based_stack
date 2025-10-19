@@ -33,3 +33,9 @@ https://vivek-thumu-portfolio-showcase.vercel.app/
 
 ==> bible app : 
 https://bible-react-chi.vercel.app/
+
+
+==> ml and deep and LNP entore content  : 
+https://github.com/berkayalan/data-science-tutorials/blob/master/data%20visualization/Matplotlib.ipynb
+1) oepn cv content : 
+https://colab.research.google.com/github/YoniChechik/AI_is_Math/blob/master/c_01_intro_to_CV_and_Python/OpenCV_tutorial.ipynb
