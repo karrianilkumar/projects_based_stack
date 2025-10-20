@@ -1,0 +1,339 @@
+for creating the virtual environment for django  : 
+
+rgukt@lenovo-e41-55:~/Desktop/WT/telusko$ python3 -m virtualenv -p python3 venv
+created virtual environment CPython3.8.10.final.0-64 in 338ms
+  creator CPython3Posix(dest=/home/rgukt/Desktop/WT/telusko/venv, clear=False, no_vcs_ignore=False, global=False)
+  seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/home/rgukt/.local/share/virtualenv)
+    added seed packages: pip==23.2.1, setuptools==68.1.2, wheel==0.41.1
+  activators BashActivator,CShellActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+  
+  rgukt@lenovo-e41-55:~/Desktop/WT/telusko$ source venv/bin/activate
+(venv) rgukt@lenovo-e41-55:~/Desktop/WT/telusko$ 
+--->  there fore venv is our vertual environment name 
+
+--> to workon the environmrnt : use command :--> workon venv
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+installation of django web frame work in ubuntu : 
+
+1) Create a new Directory and cd into it.
+
+mkdir test , cd test
+
+2) Install and Create a Virtual environment.
+
+python3 -m pip install virtualenv virtualenv venv -p python3
+
+3) Activate Virtual Environment:  source venv/bin/activate
+
+4) Install Django: pip install django
+
+5) Start a new project: django-admin startproject myproject
+
+cd to your project and Run Project:
+
+cd myproject,
+
+6) python3 manage.py runserver
+You can see your project here: http://127.0.0.1:8000/  so this our localhost address or port address 
+
+7) now go to the chrome url and type : http://127.0.0.1:8000/ then django default page will be opened......
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+1st program in django : 
+
+#command  to create a calc app , it is an app to do the django programs : 
+rgukt@lenovo-e41-55:~/Desktop/WT/telusko/projects/telusko$ python3 manage.py startapp calc
+rgukt@lenovo-e41-55:~/Desktop/WT/telusko/projects/telusko$ 
+
+--------------------------------------------------------------
+
+/home/rgukt/Desktop/WT/telusko/projects/telusko/calc/urls.py   : 
+code : 
+
+from django.urls import path # this line is copy pasted from  telusko/urls.py
+from . import views # importing views file 
+
+urlpatterns=[
+    path('',views.home,name='home') # here views.home is function in views.py file  and '/' means homepage or root page 
+]
+
+
+--------------------------------------------------------------
+
+/home/rgukt/Desktop/WT/telusko/projects/telusko/telusko/urls.py   : 
+code : 
+
+# actually this is the main file which is contains all the file paths to display their content on browser 
+from django.contrib import admin
+from django.urls import path,include 
+
+urlpatterns = [
+    path('',include('calc.urls')), # have use the urls file of calc app 
+    path('admin/', admin.site.urls),
+]
+
+------------------------------------------------------------------
+/home/rgukt/Desktop/WT/telusko/projects/telusko/calc/views.py  : 
+code :
+
+from django.shortcuts import render
+# Create your views here.
+from django.http import HttpResponse  # HttpResponse is belongs to http module   
+
+
+def home(request): # requse made by client to get the home page 
+    return HttpResponse("<h1>hello world</h1>") # now server is giving the response to client 
+
+-----------------------------------------------------------------------
+--> now after writing this code just run command to run the django server  :
+rgukt@lenovo-e41-55:~/Desktop/WT/telusko/projects/telusko$ python3 manage.py runserver
+
+and go to the chrome url there type : http://127.0.0.1:8000/ here you will see the o/p as hello word 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---> Django template language (DTL) : this dtl used to create the dynamic content in the webpages 
+note : jingo template is also used  create the dynamic content in the webpages 
+
+note : the realation among all files u could understand when you see the code of all below files : 
+----------------------------------------------------------------------------
+/home/rgukt/Desktop/WT/telusko/projects/telusko/calc/urls.py   : this code is same as  previous code
+# note : this file shows the realtion b/w views.py and home.html file 
+----------------------------------------------------------------------------
+/home/rgukt/Desktop/WT/telusko/projects/telusko/telusko/urls.py :   this code is same as  previous code
+----------------------------------------------------------------------------
+
+/home/rgukt/Desktop/WT/telusko/projects/telusko/calc/views.py  : 
+code : 
+
+from django.shortcuts import render
+from django.http import HttpResponse  # HttpResponse is belongs to http module   
+
+
+def home(request): # requse made by client to get the home page 
+   return render(request,'home.html',{'name':'anil'}) # here we accessing the home.html page with dynaic content as name  
+
+----------------------------------------------------------------------------
+/home/rgukt/Desktop/WT/telusko/projects/telusko/templates/home.html :
+code : 
+<h1>hello {{name}}!!!!!</h1>
+
+----------------------------------------------------------------------------
+/home/rgukt/Desktop/WT/telusko/projects/telusko/telusko/settings.py   : 
+code :
+
+# rest of code 
+ROOT_URLCONF = 'telusko.urls'
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR,'templates')], # here we are including the templates folder in telusko base_dir ---------
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+#rest of code 
+------------------------------------------------------------------------------------------------------------------------------------------------------
+---> addition of 2 numbers in django using GET method :
+
+note : the realation among all files u could understand when you see the code of all below files : 
+----------------------------------------------------------------------------
+/home/rgukt/Desktop/WT/telusko/projects/telusko/calc/urls.py   : this code is same as  previous code
+# note : this file shows the realtion b/w views.py and home.html file of templates folder in the same directory 
+code : 
+
+from django.urls import include , path # this line is copy pasted from  telusko/urls.py
+from . import views # importing views file 
+from django.contrib import admin
+
+
+urlpatterns=[
+   
+    path('',views.home,name='home'), # here views.home is function in views.py file  and '/' means homepage or root page 
+    path('add',views.add,name='add')
+]
+----------------------------------------------------------------------------
+/home/rgukt/Desktop/WT/telusko/projects/telusko/telusko/urls.py :   this code is same as  previous code
+----------------------------------------------------------------------------
+/home/rgukt/Desktop/WT/telusko/projects/telusko/templates/home.html :
+code : 
+{'base.html' is for getting background and interface consider it as a comment  }
+
+
+{% extends 'base.html' %}
+
+{% block content %} 
+<h1>hello {{name}}!!!!!</h1>
+
+<form action="add">
+    Enter 1st number : <input type="text" name="num1"><br>
+    Enter 2nd number : <input type="text" name="num2"><br>
+    <input type="submit">
+</form>
+
+{% endblock %}
+
+----------------------------------------------------------------------------
+/home/rgukt/Desktop/WT/telusko/projects/telusko/templates/result.html  :
+code : 
+{% extends 'base.html' %}
+{% block content %} 
+
+Result : {{result}}
+
+{% endblock %}
+
+----------------------------------------------------------------------------
+/home/rgukt/Desktop/WT/telusko/projects/telusko/calc/views.py   :
+code :
+
+from django.shortcuts import render
+from django.http import HttpResponse  # HttpResponse is belongs to http module   
+
+# requse made by client to get the home page
+def home(request):#  path('',views.home,name='home')  path '' means chrome url is changed to /
+    # views.home is a func. and the function name is home
+   return render(request,'home.html',{'name':'anil'}) 
+
+
+
+def add(request) : #  path('add',views.add,name='add') path 'add' means chrome url is changed to /add?num1=1&num2=3
+    val1 = int(request.GET['num1']) # actually url data in the form of string so convert it into integer 
+    val2 = int(request.GET['num2']) # num2 , num1 names already given to the input fields in home.html file 
+    res = val1+val2
+
+    return render(request,'result.html',{'result':res})
+
+
+----------------------------------------------------------------------------
+note : actually the template folder is also linked with telusko i.e main folder through the settings.py file so we can add  calc & template folders now 
+in settings.py of template folder the linking of template folder to the telusko main folder  :
+ 'DIRS': [os.path.join(BASE_DIR,'templates')], # here we are including the templates folder in telusko base_dir
+ 
+/home/rgukt/Desktop/WT/telusko/projects/telusko/templates/base.html   : 
+note : this base.html file is used for background style purspose only 
+code : 
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Telusko</title>
+</head>
+
+<body bgcolor="cyan">
+
+    {% block content %} 
+
+    {% endblock %}
+
+</body>
+
+</html>
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---> addition of 2 numbers in django using POST method :(here the send request data to is not appearing in url )
+note : when u want use POST method in django we have use csrf_token to pretetct the secrete data from 3rd party like username & password 
+
+
+code :
+/home/rgukt/Desktop/WT/telusko/projects/telusko/calc/urls.py 
+
+/home/rgukt/Desktop/WT/telusko/projects/telusko/telusko/urls.py
+
+/home/rgukt/Desktop/WT/telusko/projects/telusko/templates/base.html
+
+note : the above 3 files have the same code as in  addition of 2 numbers in django using GET method 
+
+-------------------------------------------------------------------------------------
+/home/rgukt/Desktop/WT/telusko/projects/telusko/calc/views.py   :
+code :
+
+from django.shortcuts import render
+from django.http import HttpResponse  # HttpResponse is belongs to http module   
+
+# requse made by client to get the home page
+def home(request):#  path('',views.home,name='home')  path '' means chrome url is changed to /
+    # views.home is a func. and the function name is home
+   return render(request,'home.html',{'name':'anil'}) 
+
+
+
+def add(request) : #  path('add',views.add,name='add') path 'add' means chrome url is changed to /add?num1=1&num2=3
+    val1 = int(request.POST['num1']) # actually url data in the form of string so convert it into integer 
+    val2 = int(request.POST['num2']) # num2 , num1 names already given to the input fields in home.html file 
+    res = val1+val2
+
+    return render(request,'result.html',{'result':res}) # means  {'result':res} this is send as parameter to the result.html file 
+
+-------------------------------------------------------------------------------------
+
+/home/rgukt/Desktop/WT/telusko/projects/telusko/templates/home.html   :
+code : 
+
+{%extends 'base.html' %}
+
+
+{%block content %}
+<h1>hello {{name}}!!!!!!!!!!!</h1>
+
+<form action="add" method="post">
+    
+    {%csrf_token%} 
+Enter 1st number :<input type="text" name="num1"><br>
+Enter 2nd number :<input type="text" name="num2"><br>
+<input type="submit"> // when we click on the submit button the our chrome url changed to http://127.0.0.1:8000/add
+</form> 
+{% endblock %}
+-------------------------------------------------------------------------------------
+
+/home/rgukt/Desktop/WT/telusko/projects/telusko/templates/result.html   : 
+code : 
+
+{% extends 'base.html' %} # this line is used for getting the background 
+{% block content %} 
+
+Result : {{result}}
+
+{% endblock %}
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+
